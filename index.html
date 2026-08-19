@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it" data-tema="chiaro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Norma — cerca nel GDPR e ottieni la citazione esatta</title>
+<meta name="description" content="Fai una domanda in lingua corrente, ottieni il comma del GDPR che risponde, citato per esteso. Tutto nel browser: nessun server, nessun modello, 147 KB.">
+<meta name="theme-color" content="#faf8f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14130f" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Norma — cerca nel GDPR e ottieni la citazione esatta">
+<meta property="og:description" content="Una domanda in lingua corrente, il comma che risponde citato per esteso. Nel browser, senza server e senza modello.">
+<meta property="og:locale" content="it_IT">
+
+<!-- Nessun percorso che esce da questa cartella: il progetto e'
+     autonomo e si pubblica dove capita, anche su un dominio suo.
+     I caratteri sono quelli di sistema, quindi non c'e' niente da
+     scaricare e niente da ospitare. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23faf8f3'/%3E%3Cpath d='M8 24V8h2.6l9 12.2V8H22v16h-2.6l-9-12.2V24z' fill='%238c2f22'/%3E%3C/svg%3E">
+
+<script>
+  // il tema prima del primo disegno, cosi' non lampeggia
+  (function () {
+    var d = document.documentElement;
+    try {
+      var t = localStorage.getItem('norma-tema');
+      if (t !== 'chiaro' && t !== 'scuro') {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'scuro' : 'chiaro';
+      }
+      d.setAttribute('data-tema', t);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+<header class="colonna testata">
+  <div class="testata__riga">
+    <a class="firma" href="https://17labs.it" rel="noopener">Un progetto di 17Labs</a>
+    <button class="interruttore" id="tema" type="button" aria-label="Cambia tema chiaro o scuro">
+      <svg class="icona-sole" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+      <svg class="icona-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"/></svg>
+    </button>
+  </div>
+
+  <h1 class="titolo">Norma<em>.</em></h1>
+  <p class="etichetta occhiello">Regolamento UE 2016/679 — GDPR · testo italiano</p>
+  <p class="sommario">
+    Chiedi come chiederesti a voce. Ti do il comma che risponde, citato per esteso, così
+    puoi verificarlo invece di fidarti. Nessuna risposta generata: solo il testo di legge,
+    con la sua collocazione.
+  </p>
+</header>
+
+<div class="ricerca" id="barra">
+  <div class="colonna">
+    <div class="campo">
+      <svg class="campo__lente" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <label class="solo-lettori" for="q">Cerca nel testo del GDPR</label>
+      <input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+             placeholder="entro quando devo segnalare una violazione al garante" disabled>
+    </div>
+    <div class="responso">
+      <b id="stato">carico l'indice…</b>
+      <div class="suggerimenti" id="suggerimenti"></div>
+    </div>
+  </div>
+</div>
+
+<main class="colonna">
+  <div id="esiti" class="esiti" role="region" aria-live="polite" aria-label="Risultati"></div>
+  <div id="messaggio"></div>
+
+  <noscript>
+    <p class="niente">Questa pagina cerca dentro il browser, quindi ha bisogno di JavaScript.
+      Il testo del regolamento resta leggibile su
+      <a href="https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32016R0679">EUR-Lex</a>.</p>
+  </noscript>
+
+  <section class="pieghe">
+    <p class="etichetta">Come funziona</p>
+    <div class="cifre">
+      <div><b>56 %</b><span>delle domande hanno l'articolo giusto al primo posto</span></div>
+      <div><b>586</b><span>brani indicizzati: 413 commi e 173 considerando</span></div>
+      <div><b>147 KB</b><span>compressi, tutto compreso, scaricati una volta sola</span></div>
+      <div><b>0</b><span>chiamate a un server per rispondere</span></div>
+    </div>
+
+    <p class="chiosa">
+      L'unità di ricerca è il <strong>comma</strong>, non l'articolo: l'articolo 15 è lungo
+      quattro commi, e restituirlo intero vorrebbe dire nascondere la risposta dentro due
+      pagine. Le 26 definizioni dell'articolo 4 sono separate una per una.
+    </p>
+    <p class="chiosa">
+      Il motore è lessicale — BM25 con la rubrica dell'articolo come campo a sé e una tabella
+      di sinonimi di dominio — <strong>non</strong> un modello a embedding. La scelta è
+      misurata, non assunta: su 45 domande scritte prima di guardare i risultati arriva al
+      56 %, dove BM25 nudo si ferma al 18 %, e costa 147 KB invece di 30 MB. Quello che ancora
+      sbaglia è divario semantico vero, ed è lì che un modello si guadagnerebbe il suo peso.
+    </p>
+    <p class="chiosa">
+      Scrivendo un riferimento esplicito — <em>art. 33</em>, <em>considerando 39</em> — si
+      salta il punteggio: la risposta è certa, non probabile.
+    </p>
+  </section>
+</main>
+
+<footer class="piede">
+  <div class="colonna">
+    Testo del regolamento: EUR-Lex, CELEX
+    <a href="https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32016R0679" rel="noopener">32016R0679</a>,
+    versione italiana. Riutilizzo permesso dalla decisione 2011/833/UE con attribuzione.
+    Questa pagina è una dimostrazione tecnica, non consulenza legale: fa testo la Gazzetta
+    ufficiale dell'Unione europea.
+    <br>
+    Codice e realizzazione: <a href="https://17labs.it" rel="noopener">17Labs — Carmine La Luna</a>.
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+
+<!-- Rete di sicurezza per l'apertura con doppio click.
+     Da file:// il browser blocca i moduli JavaScript e fetch, quindi
+     la pagina resterebbe muta a "carico l'indice…" senza dire perche'.
+     Questo script e' classico e non un modulo, cosi' gira proprio nel
+     caso in cui i moduli non girano. -->
+<script>
+(function () {
+  function controlla() {
+    var campo = document.getElementById('q');
+    if (campo && !campo.disabled) return;
+    if (location.protocol === 'http:' || location.protocol === 'https:') return;
+
+    var avviso = document.createElement('div');
+    avviso.setAttribute('style', 'position:fixed;inset:0;z-index:999;overflow:auto;'
+      + 'background:#faf8f3;color:#1c1a17;padding:10vh 6vw;'
+      + 'font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,sans-serif');
+    avviso.innerHTML =
+      '<div style="max-width:60ch;margin:0 auto">'
+      + '<p style="font:500 11px/1 ui-monospace,monospace;letter-spacing:.16em;'
+      + 'text-transform:uppercase;color:#8c2f22;margin:0 0 16px">Norma</p>'
+      + '<h1 style="font:400 30px/1.15 Georgia,serif;margin:0 0 16px">'
+      + 'Serve un server, non un doppio click</h1>'
+      + '<p style="color:#4a463e;margin:0 0 18px">Aprendo il file direttamente il protocollo '
+      + 'è <code>' + location.protocol + '</code>, e il browser blocca i moduli JavaScript e '
+      + 'la lettura dei file dell’indice. Non è un guasto: è una regola di sicurezza, e vale '
+      + 'per qualsiasi sito.</p>'
+      + '<p style="color:#4a463e;margin:0 0 8px"><strong>Doppio click su '
+      + '<code style="color:#8c2f22">anteprima.cmd</code></strong>, nella stessa cartella.</p>'
+      + '<p style="color:#6b6559;font-size:14px;margin:18px 0 0;padding-top:16px;'
+      + 'border-top:1px solid #e2dccf">Fa partire un server locale e apre la pagina '
+      + 'all’indirizzo giusto. Una volta pubblicata online, niente di tutto questo serve.</p>'
+      + '</div>';
+    document.body.appendChild(avviso);
+  }
+  if (document.readyState === 'complete') setTimeout(controlla, 1200);
+  else window.addEventListener('load', function () { setTimeout(controlla, 1200); });
+})();
+</script>
+</body>
+</html>

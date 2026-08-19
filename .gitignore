@@ -1,0 +1,25 @@
+# ============================================================
+#  Cosa NON entra nel repository, e perche'.
+#
+#  La regola: dentro va tutto quello che serve a far funzionare
+#  la pagina o a riprodurre le misure. Fuori quello che si
+#  rigenera con un comando.
+# ============================================================
+
+# 826 KB di HTML EUR-Lex. Si riprende con `python estrai.py`,
+# e il repository di un sito non e' un archivio di sorgenti altrui.
+sorgente/
+
+# Indice di controllo: esiste solo per il confronto con e senza
+# stemmer in valuta.mjs, che funziona benissimo anche senza.
+# Si ricostruisce con `node indicizza.mjs --senza-stem`.
+indice-senza-stem.json
+
+# Cartella di pubblicazione per host diversi da questo.
+# Qui GitHub Pages serve direttamente la radice, quindi non serve.
+dist/
+
+# Robaccia di sistema
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,365 @@
+/* ============================================================
+   Norma — foglio di stile
+   Autonomo: non dipende da nessun altro progetto. Nessun font da
+   scaricare, nessuna richiesta a domini esterni, nessun file
+   condiviso con il sito di 17Labs.
+
+   Il tema e' deliberatamente l'opposto di quello del sito, che e'
+   inchiostro scuro e ottone. Qui il fondo e' carta e l'accento e'
+   amaranto, il testo di legge e' in carattere graziato e la
+   colonna e' stretta come quella di un codice. Non e' vezzo: il
+   contenuto e' un testo normativo, e deve somigliare a un'opera
+   di consultazione, non alla vetrina di uno studio.
+
+   I caratteri sono quelli di sistema. Un carattere ospitato in
+   proprio vorrebbe dire mezzo megabyte di woff2 su una pagina che
+   ne pesa centoquaranta, e Georgia sta su qualsiasi macchina da
+   venticinque anni.
+
+   Ordine:  1 token  ·  2 base  ·  3 testata  ·  4 ricerca
+            5 risultati  ·  6 pieghe  ·  7 stampa
+   ============================================================ */
+
+/* ====================== 1 — TOKEN ========================== */
+:root {
+  --colonna: 880px;
+
+  --graziato: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+  --lineare: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --macchina: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --p1: 8px;  --p2: 14px;  --p3: 22px;  --p4: 34px;  --p5: 54px;
+  --curva: cubic-bezier(.22, .61, .36, 1);
+}
+
+html[data-tema="chiaro"] {
+  --carta:       #faf8f3;
+  --carta-2:     #f2eee4;
+  --superficie:  #ffffff;
+  --filo:        #e2dccf;
+  --filo-2:      #bcb3a0;
+  --inchiostro:  #1c1a17;
+  --inchiostro-2:#4a463e;
+  --inchiostro-3:#6b6559;
+  --accento:     #8c2f22;
+  --su-accento:  #ffffff;
+  --accento-velo:rgba(140, 47, 34, .09);
+  --evidenzia:   #f6e6a8;
+  color-scheme: light;
+}
+
+html[data-tema="scuro"] {
+  --carta:       #14130f;
+  --carta-2:     #1b1915;
+  --superficie:  #201d18;
+  --filo:        #302b23;
+  --filo-2:      #4c4538;
+  --inchiostro:  #eeeae0;
+  --inchiostro-2:#b3ac9d;
+  --inchiostro-3:#8a8375;
+  --accento:     #e08a72;
+  --su-accento:  #14130f;
+  --accento-velo:rgba(224, 138, 114, .13);
+  --evidenzia:   #4a3d1c;
+  color-scheme: dark;
+}
+
+/* ====================== 2 — BASE =========================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--carta);
+  color: var(--inchiostro);
+  font-family: var(--lineare);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; }
+p { margin: 0 0 var(--p2); }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accento); }
+
+::selection { background: var(--accento); color: var(--su-accento); }
+
+:focus-visible { outline: 2px solid var(--accento); outline-offset: 3px; }
+
+.colonna {
+  width: 100%;
+  max-width: var(--colonna);
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.solo-lettori {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.etichetta {
+  font-family: var(--macchina);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--inchiostro-3);
+}
+
+/* ====================== 3 — TESTATA ======================== */
+.testata { padding-block: var(--p4) var(--p3); }
+
+.testata__riga { display: flex; align-items: center; gap: var(--p2); }
+
+.firma {
+  margin-right: auto;
+  font-family: var(--macchina);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--inchiostro-3);
+  text-decoration: none;
+}
+.firma:hover { color: var(--accento); }
+
+.interruttore {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border: 1px solid var(--filo-2);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--inchiostro-2);
+  cursor: pointer; padding: 0;
+  transition: border-color .2s var(--curva), color .2s var(--curva);
+}
+.interruttore:hover { border-color: var(--accento); color: var(--accento); }
+.interruttore svg { width: 16px; height: 16px; }
+html[data-tema="scuro"] .icona-sole { display: block; }
+html[data-tema="scuro"] .icona-luna { display: none; }
+html[data-tema="chiaro"] .icona-sole { display: none; }
+html[data-tema="chiaro"] .icona-luna { display: block; }
+
+.titolo {
+  margin-top: var(--p4);
+  font-family: var(--graziato);
+  font-size: clamp(34px, 6vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.titolo em { font-style: italic; color: var(--accento); }
+
+.occhiello { margin-top: var(--p3); }
+
+.sommario {
+  margin-top: var(--p2);
+  max-width: 60ch;
+  color: var(--inchiostro-2);
+  font-size: 16.5px;
+}
+
+/* ====================== 4 — RICERCA ======================== */
+.ricerca {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-block: var(--p3) var(--p2);
+  background: var(--carta);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s var(--curva), box-shadow .25s var(--curva);
+}
+.ricerca.attaccata {
+  border-bottom-color: var(--filo);
+  box-shadow: 0 6px 18px -14px rgba(0, 0, 0, .45);
+}
+
+.campo { position: relative; }
+.campo input {
+  width: 100%;
+  padding: 18px 20px 18px 52px;
+  font-family: var(--lineare);
+  font-size: clamp(16px, 1.5vw, 18px);
+  color: var(--inchiostro);
+  background: var(--superficie);
+  border: 1px solid var(--filo-2);
+  border-radius: 4px;
+  transition: border-color .2s var(--curva);
+}
+.campo input:focus { outline: none; border-color: var(--accento); }
+.campo input::placeholder { color: var(--inchiostro-3); }
+.campo input:disabled { opacity: .6; }
+.campo__lente {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%);
+  width: 20px; height: 20px;
+  color: var(--inchiostro-3);
+  pointer-events: none;
+}
+
+.responso {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; min-height: 20px;
+}
+.responso b {
+  font-family: var(--macchina); font-size: 11px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--inchiostro-3); font-variant-numeric: tabular-nums;
+}
+
+.suggerimenti { display: flex; flex-wrap: wrap; gap: 7px; }
+.suggerimenti button {
+  font-family: var(--lineare);
+  font-size: 13px;
+  color: var(--inchiostro-2);
+  background: var(--carta-2);
+  border: 1px solid var(--filo);
+  border-radius: 100px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: border-color .2s var(--curva), color .2s var(--curva);
+}
+.suggerimenti button:hover { border-color: var(--accento); color: var(--accento); }
+
+/* ====================== 5 — RISULTATI ====================== */
+.esiti { margin-top: var(--p3); }
+.esiti:empty { display: none; }
+
+.scheda {
+  padding: var(--p3) 0 var(--p3) var(--p3);
+  border-top: 1px solid var(--filo);
+  border-left: 2px solid transparent;
+  transition: border-left-color .2s var(--curva);
+}
+.scheda:hover { border-left-color: var(--accento); }
+.scheda:last-child { border-bottom: 1px solid var(--filo); }
+
+.scheda__capo {
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.scheda__cit {
+  font-family: var(--macchina);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accento);
+  white-space: nowrap;
+}
+.scheda__rubrica {
+  font-family: var(--graziato);
+  font-size: 17px;
+  color: var(--inchiostro);
+}
+.scheda__sede {
+  margin-left: auto;
+  font-family: var(--macchina);
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--inchiostro-3);
+}
+.marchietto {
+  font-family: var(--macchina);
+  font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--su-accento); background: var(--accento);
+  border-radius: 2px; padding: 3px 7px;
+}
+
+/* Il testo di legge in graziato: e' la sola parte della pagina
+   che va letta davvero, e va letta con calma. Tutto il resto —
+   citazioni, etichette, stato — e' apparato. */
+.scheda__testo {
+  font-family: var(--graziato);
+  font-size: 16.5px;
+  line-height: 1.78;
+  color: var(--inchiostro-2);
+  margin: 0;
+  max-width: 68ch;
+}
+.scheda__testo mark {
+  background: var(--evidenzia);
+  color: var(--inchiostro);
+  padding: 0 1px;
+  border-radius: 1px;
+}
+.scheda__testo.ripiegato {
+  display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.scheda__apri {
+  margin-top: 10px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--macchina); font-size: 10.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--accento);
+}
+
+.niente {
+  margin-top: var(--p4);
+  padding: var(--p4) var(--p3);
+  text-align: center;
+  border: 1px dashed var(--filo-2);
+  border-radius: 4px;
+  color: var(--inchiostro-3);
+  font-size: 15px;
+}
+
+/* ====================== 6 — PIEGHE ========================= */
+.pieghe { margin-top: var(--p5); padding-bottom: var(--p5); }
+
+.cifre {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--p3) var(--p2);
+  margin-top: var(--p3);
+  padding-top: var(--p3);
+  border-top: 1px solid var(--filo);
+}
+.cifre b {
+  display: block;
+  font-family: var(--graziato);
+  font-size: 30px; font-weight: 400;
+  color: var(--accento);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.cifre span {
+  display: block; margin-top: 4px;
+  font-size: 13px; line-height: 1.5; color: var(--inchiostro-2);
+}
+
+.chiosa {
+  margin-top: var(--p3);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--inchiostro-3);
+  max-width: 72ch;
+}
+.chiosa strong { color: var(--inchiostro-2); font-weight: 600; }
+
+.piede {
+  border-top: 1px solid var(--filo);
+  padding-block: var(--p3);
+  font-size: 13px;
+  color: var(--inchiostro-3);
+}
+.piede a { color: var(--accento); }
+
+@media (max-width: 600px) {
+  .scheda { padding-left: var(--p2); }
+  .scheda__sede { margin-left: 0; width: 100%; }
+  .titolo { margin-top: var(--p3); }
+}
+
+/* ====================== 7 — STAMPA ========================= */
+/* Un risultato che si stampa serve davvero: chi cerca una norma
+   spesso la deve allegare a qualcosa. */
+@media print {
+  .ricerca, .interruttore, .suggerimenti, .scheda__apri, .pieghe { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .scheda { break-inside: avoid; border-left: 0; padding-left: 0; }
+  .scheda__testo { color: #000; -webkit-line-clamp: unset; display: block; }
+  .scheda__cit { color: #000; }
+  mark { background: none; font-weight: 700; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
+}
