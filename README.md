@@ -27,7 +27,7 @@ partenza (`valutazione.json`).
 | P@3 | **69 %** | 58 % |
 | MRR | 0.635 | 0.491 |
 
-Peso sul filo: **147 KB compressi** (indice 56 KB + testi 92 KB). Un modello a
+Peso sul filo: **156 KB compressi** (misurati sul sito vivo, non stimati in locale). Un modello a
 embedding multilingue, per confronto, ne costerebbe circa 30 000.
 
 Due misure e non una perché sono due errori diversi: atterrare sull'articolo 15
@@ -139,7 +139,7 @@ ogni visita. `pubblica.mjs` verifica che i due file abbiano lo stesso numero di
 brani, perché è l'ordine a tenerli allineati — e se si rompesse, la pagina mostrerebbe
 il testo sbagliato sotto la citazione giusta.
 
-Sul filo: **149 KB compressi**.
+Sul filo: **156 KB compressi**.
 
 Sul sito di 17Labs c'è **una sola referenza**: la scheda del Caso 02 con un
 collegamento in uscita. Nient'altro.
