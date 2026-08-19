@@ -67,8 +67,16 @@ const mediaLunghezzaRub = media(conRubrica);
 /* Nell'indice il testo non serve: serve solo a mostrare il
    risultato. Resta in brani.json, che la pagina carica a parte,
    cosi' la ricerca parte prima di aver scaricato tutto. */
+/* Niente data di costruzione qui dentro.
+
+   C'era, ed era un difetto: un timestamp rende il file diverso a
+   ogni ricostruzione, quindi l'indice non e' piu' riproducibile e
+   la verifica automatica "l'indice corrisponde ai brani?"
+   fallirebbe ogni giorno per un motivo falso. L'ha trovato la
+   verifica stessa, il giorno dopo averla scritta.
+
+   Quando serve sapere da cosa e' stato costruito, lo dice git. */
 const indice = {
-  generato: new Date().toISOString().slice(0, 10),
   fonte: 'EUR-Lex CELEX 32016R0679 (IT) — riuso ex decisione 2011/833/UE',
   stem: !SENZA_STEM,
   mediaLunghezza,

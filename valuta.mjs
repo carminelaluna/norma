@@ -115,6 +115,47 @@ if (ABLAZIONE) {
   ]) console.log(riga(nome, misura('./indice.json', opz)));
 }
 
+/* ------------------------------------------------------------
+   Soglie: il pavimento sotto cui non si scende.
+
+   Fino a ieri questo file misurava e basta. Il che vuol dire che
+   una modifica poteva far scendere la precisione dal 56 % al
+   40 % senza che niente fallisse, mentre il sito continuava a
+   dichiarare 56 — un numero usato come credenziale davanti a
+   un'azienda. Una misura che non puo' fallire non protegge
+   niente.
+
+   I valori sono un pavimento, non un bersaglio: stanno qualche
+   punto sotto la misura corrente, cosi' un riassetto che sposta
+   una domanda non blocca il lavoro, ma un guasto vero si.
+   Quando la precisione sale davvero, si alzano anche questi.
+
+   Misura corrente:  P@1 art. 56 %  ·  P@3 art. 69 %  ·  P@1 es. 38 %
+   ------------------------------------------------------------ */
+const SOGLIE = {
+  'P@1 articolo': { valore: r => r.articolo.p1, minimo: 0.50 },
+  'P@3 articolo': { valore: r => r.articolo.p3, minimo: 0.62 },
+  'P@1 esatto':   { valore: r => r.esatto.p1,   minimo: 0.33 }
+};
+
+if (process.argv.includes('--soglie')) {
+  console.log('\n  Controllo delle soglie:\n');
+  let caduto = false;
+  for (const [nome, { valore, minimo }] of Object.entries(SOGLIE)) {
+    const v = valore(conStem);
+    const ok = v >= minimo;
+    if (!ok) caduto = true;
+    console.log(`  ${ok ? 'ok  ' : 'ROTTO'}  ${nome.padEnd(14)} ${pct(v)}  (minimo ${pct(minimo)})`);
+  }
+  if (caduto) {
+    console.error('\n  La precisione e\' scesa sotto il pavimento.');
+    console.error('  Il sito dichiara pubblicamente questi numeri: o si aggiusta la');
+    console.error('  modifica, o si aggiornano le soglie E le cifre sulla pagina.\n');
+    process.exit(1);
+  }
+  console.log('\n  Tutte sopra il pavimento.\n');
+}
+
 console.log(`\n  Domande senza l'articolo giusto in cima: ${conStem.errori.length}`);
 if (DETTAGLI) {
   for (const e of conStem.errori) {

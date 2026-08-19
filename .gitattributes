@@ -1,0 +1,18 @@
+# ============================================================
+#  Fine riga normalizzati.
+#
+#  Senza questo file git avvisa a ogni commit su Windows, e un
+#  clone su Linux mostra tutti i file come modificati. Con
+#  eol=lf i file stanno nel repository in forma canonica, e
+#  vengono convertiti solo nella copia di lavoro se serve.
+#
+#  I .cmd fanno eccezione: cmd.exe vuole CRLF, e con LF un file
+#  con etichette e salti puo' comportarsi in modo imprevedibile.
+# ============================================================
+* text=auto eol=lf
+*.cmd text eol=crlf
+
+# I JSON dell'indice sono grossi e generati: niente diff a schermo
+indice.json -diff
+testi.json  -diff
+brani.json  -diff

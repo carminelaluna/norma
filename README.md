@@ -168,8 +168,40 @@ dell'indice. La pagina se ne accorge e lo spiega, invece di restare muta.
   guadagnerebbe i suoi 30 MB — e ora il preventivo è quantificato invece che
   immaginato.
 
+## Verifiche automatiche
+
+A ogni push una GitHub Action controlla due cose, e nessuna e' cosmetica:
+
+1. **L'indice e' ricostruibile dai brani committati.** Se qualcuno modifica
+   `brani.json` e dimentica di rilanciare l'indicizzatore, la pagina cercherebbe in un
+   corpus e mostrerebbe il testo di un altro. La verifica ricostruisce e confronta.
+   Per questo `indicizza.mjs` non scrive nessuna data dentro l'indice: un timestamp lo
+   renderebbe diverso a ogni ricostruzione, e la verifica fallirebbe ogni giorno per un
+   motivo falso.
+2. **La precisione non e' scesa sotto il pavimento.** `node valuta.mjs --soglie` esce
+   con codice diverso da zero se P@1 articolo scende sotto il 50 %, P@3 sotto il 62 %
+   o P@1 esatto sotto il 33 %. Sono pavimenti, non bersagli: qualche punto sotto la
+   misura corrente, cosi' un riassetto non blocca il lavoro ma un guasto vero si.
+
+Il motivo e' semplice: il sito dichiara pubblicamente **56 %** come credenziale
+davanti a un'azienda. Una misura che non puo' fallire non protegge quel numero.
+
+Non serve ne' Python ne' rete: `brani.json` sta nel repository proprio per rendere la
+misura riproducibile da chiunque, con `npm test`.
+
+```bash
+npm test        # controlla le soglie
+npm run misura  # misura con l'ablazione
+```
+
 ## Fonte e licenze
 
-Il testo del regolamento viene da EUR-Lex, CELEX **32016R0679**, versione italiana.
-Il riutilizzo è permesso dalla decisione **2011/833/UE** della Commissione, con
-attribuzione. Il codice è mio.
+Sono due cose separate, e vale la pena distinguerle.
+
+**Il codice è sotto licenza MIT** (vedi `LICENSE`): si legge, si usa, si modifica, si
+ridistribuisce, anche in un lavoro commerciale, tenendo la nota di copyright.
+
+**Il testo del regolamento non è mio e non è coperto da quella licenza.** Viene da
+EUR-Lex, CELEX **32016R0679**, versione italiana; il riutilizzo è permesso dalla
+decisione **2011/833/UE** della Commissione, con attribuzione. Riguarda `brani.json`,
+`testi.json` e il contenuto testuale di `indice.json`.

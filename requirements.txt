@@ -1,0 +1,4 @@
+# Servono solo a estrai.py, cioe' alla lettura dell'HTML di EUR-Lex.
+# L'indicizzazione, la misura e la pagina girano senza Python.
+beautifulsoup4>=4.12
+requests>=2.31

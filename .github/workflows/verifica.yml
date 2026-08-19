@@ -1,0 +1,49 @@
+# ============================================================
+#  Verifica automatica a ogni push.
+#
+#  Due controlli, e nessuno dei due e' cosmetico.
+#
+#  1. L'indice committato e' davvero ricostruibile dai brani
+#     committati. Se qualcuno modifica brani.json e dimentica di
+#     rilanciare l'indicizzatore, indice.json e testi.json
+#     restano vecchi: la pagina cerca in un corpus e mostra il
+#     testo di un altro. Qui si ricostruisce e si confronta.
+#
+#  2. La precisione non e' scesa sotto il pavimento. Il sito
+#     dichiara pubblicamente 56 %: se una modifica lo fa crollare
+#     bisogna saperlo prima di pubblicare, non dopo.
+#
+#  Non serve ne' Python ne' rete: brani.json e' nel repository
+#  proprio per rendere la misura riproducibile da chiunque.
+# ============================================================
+name: verifica
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verifica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: L'indice e' ricostruibile dai brani
+        run: |
+          node indicizza.mjs
+          if ! git diff --quiet -- indice.json testi.json; then
+            echo "::error::indice.json o testi.json non corrispondono a brani.json."
+            echo "Rilancia 'node indicizza.mjs' e committa il risultato."
+            git diff --stat -- indice.json testi.json
+            exit 1
+          fi
+          echo "indice e testi coincidono con quanto committato"
+
+      - name: La precisione non e' scesa
+        run: node valuta.mjs --soglie
